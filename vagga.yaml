@@ -13,8 +13,8 @@ commands:
     container: ubuntu
     run: |
       set -ex
-      cargo check --workspace --exclude=edgedb-tokio --exclude=globals-example --tests
-      cargo check -p edgedb-tokio -p globals-example --tests
+      cargo check --workspace --exclude=edgedb-client --tests
+      cargo check -p edgedb-client --tests
 
   doc: !Command
     description: Build documentation
@@ -40,8 +40,8 @@ commands:
     container: ubuntu
     run: |
       set -ex
-      cargo test --workspace --exclude edgedb-tokio --exclude globals-example --all-features
-      cargo test -p edgedb-tokio -p globals-example --all-features
+      cargo test --workspace --exclude edgedb-client --all-features
+      cargo test -p edgedb-client --all-features
 
   test-all-types: !Command
     description: Run tests
@@ -111,7 +111,7 @@ commands:
     run: [cargo, run, --package=edgedb-tokio, --example]
 
   example-astd: !Command
-    description: Run named async-std example
+    description: Run async-std example
     container: ubuntu
     environ:
       EDGEDB_CLIENT_TLS_SECURITY: insecure
@@ -119,12 +119,21 @@ commands:
     run: [cargo, run, --package=edgedb-client, --example]
 
   example-globals: !Command
-    description: Run named tokio example
+    description: Run tokio example
     container: ubuntu
     environ:
       EDGEDB_CLIENT_TLS_SECURITY: insecure
       EDGEDB_HOST: localhost
     run: [cargo, run, --package=globals-example]
+
+  example-query-error: !Command
+    description: Run query error example
+    container: ubuntu
+    environ:
+      EDGEDB_CLIENT_TLS_SECURITY: insecure
+      EDGEDB_HOST: localhost
+      LANG: en_US.utf8
+    run: [cargo, run, --package=query-error-example]
 
   gen-errors: !Command
     description: Generate error codes

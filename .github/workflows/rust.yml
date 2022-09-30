@@ -22,22 +22,22 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: test
-          args: --workspace --exclude edgedb-tokio --exclude globals-example --all-features
+          args: --workspace --exclude edgedb-client --all-features
       - name: Test edgedb-tokio
         uses: actions-rs/cargo@v1
         with:
           command: test
           args: --package edgedb-tokio --package globals-example --all-features
-      - name: Check no default features (no tokio)
+      - name: Check no default features (no async-std)
         uses: actions-rs/cargo@v1
         with:
           command: check
-          args: --no-default-features --workspace --exclude edgedb-tokio --exclude globals-example
-      - name: Check no default features tokio
+          args: --no-default-features --workspace --exclude edgedb-client
+      - name: Check no default features async-std client
         uses: actions-rs/cargo@v1
         with:
           command: check
-          args: --no-default-features --package edgedb-tokio
+          args: --no-default-features --package edgedb-client
       - name: Check with `fs` feature (edgedb-tokio)
         uses: actions-rs/cargo@v1
         with:
@@ -48,16 +48,16 @@ jobs:
         with:
           command: check
           args: --features=env --package edgedb-tokio
-      - name: Check all features (no edgedb-tokio)
+      - name: Check all features (no async-std)
         uses: actions-rs/cargo@v1
         with:
           command: check
-          args: --all-features --workspace --exclude edgedb-tokio --exclude globals-example
-      - name: Check all features
+          args: --all-features --workspace --exclude edgedb-client
+      - name: Check all features edgedb-client
         uses: actions-rs/cargo@v1
         with:
           command: check
-          args: --all-features --package edgedb-tokio
+          args: --all-features --package edgedb-client
 
       - name: Test protocol without default features
         working-directory: ./edgedb-protocol
